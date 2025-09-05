@@ -162,9 +162,6 @@ class SpeedCodePopup {
 
 	setupProblemButtons(problemData) {
 		const buttons = this.ui.getButtons();
-		console.log(buttons);
-		const joinedRooms = this.state.getState("room.joinedRooms") || [];
-		const username = this.state.getState("user.username");
 
 		if (buttons.viewBucket) {
 			buttons.viewBucket.addEventListener("click", () => {
