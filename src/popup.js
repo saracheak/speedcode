@@ -136,7 +136,9 @@ class SpeedCodePopup {
 				ValidationUtils.isValidProblemData(problemData)
 			) {
 				this.state.setCurrentProblem(problemData);
-				this.ui.renderProblemInfo(problemData, joinedRooms, username);
+				this.ui.renderProblemInfo(problemData, joinedRooms, username, (selectedProblemData, bucketId, item) => {
+					this.handleAddToBucket(selectedProblemData, bucketId, item);
+				});
 				this.setupProblemButtons(problemData);
 			} else {
 				this.ui.showStateMessage(
@@ -160,12 +162,9 @@ class SpeedCodePopup {
 
 	setupProblemButtons(problemData) {
 		const buttons = this.ui.getButtons();
+		console.log(buttons);
 		const joinedRooms = this.state.getState("room.joinedRooms") || [];
 		const username = this.state.getState("user.username");
-
-		this.ui.renderProblemInfo(problemData, joinedRooms, username, (selectedProblemData, bucketId, item) => {
-			this.handleAddToBucket(selectedProblemData, bucketId, item);
-		});
 
 		if (buttons.viewBucket) {
 			buttons.viewBucket.addEventListener("click", () => {
@@ -257,6 +256,7 @@ class SpeedCodePopup {
 	}
 
 	async handleToggleBucket() {
+		console.log("handleToggleBucket");
 		const button = this.ui.getButtons().viewBucket;
 		const isVisible = this.state.getState("ui.isBucketVisible");
 		const newVisibility = !isVisible;
